@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Account application Form</title>
+  <style>
+    table {
+      width: 80%;
+      border-collapse: collapse;
+    }
+
+    table, th, td {
+      border: 1px solid black;
+      padding: 8px;
+    }
+
+    th {
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <form action="submit.php" method="POST">
+  	<table>
+      <tr>
+        <td>Application ID</td>
+        <td><input type="number" id="acap_id" name="acap_id"></td>
+      </tr>
+      <tr>
+        <td>Application Nominee First Name:</td>
+        <td><input type="text" id="acap_nominee_fn" name="acap_nominee_fn"></td>
+      </tr>
+      <tr>
+        <td>Application Nominee Last Name:</td>
+        <td><input type="text" id="acap_nominee_ln" name="acap_nominee_ln"></td>
+      </tr>
+      <tr>
+        <td>Customer ID:</td>
+        <td><input type="number" id="acap_cust_id" name="acap_cust_id"></td>
+      </tr>
+      <tr>
+        <td>Application Date:</td>
+        <td><input type="date" id="acap_apdate" name="acap_apdate"></td>
+      </tr>
+      <tr>
+        <td>Account Type ID:</td>
+        <td><input type="number" id="acap_acty_id" name="acap_acty_id"></td>
+      </tr>
+      <tr>
+        <td>Created By:</td>
+        <td><input type="text" id="acap_createdby" name="acap_createdby"></td>
+      </tr>
+      <tr>
+        <td>Created Date:</td>
+        <td><input type="date" id="acap_createddate" name="acap_createddate"></td>
+      </tr>
+      <tr>
+        <td>Aadhar card:</td>
+        <td><input type="file" id="pan" name="pan"></td>
+      </tr>
+      <tr>
+        <td>PAN card:</td>
+        <td><input type="file" id="pan" name="pan"></td>
+      </tr>
+      <tr>
+        <td>Passport :</td>
+        <td><input type="file" id="passport" name="passport"></td>
+      </tr>
+      <tr>
+        <td>Driving license :</td>
+        <td><input type="file" id="Driving" name="Driving"></td>
+      </tr>
+      <tr>
+        <td>Job card:</td>
+        <td><input type="file" id="jobcard" name="jobcard"></td>
+      </tr>
+    </table>
+    
+   
+    
+    
+    <input type="submit" value="Submit">
+  </form>
+</body>
+</html>
