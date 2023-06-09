@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<!-- Template by quackit.com -->
+<html>
+	<head>
+		<title>student login2</title>
+		<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<script>  
+         function validateform(){  
+         var user_id=document.stud.email.value;  
+         var password=document.stud.password.value;  
+        if (email==null || email==" ")
+        {
+             alert("emailcan not be empty");
+         }
+          alert("You have entered an invalid email address!")
+          return (false)
+          else if(password.length<6){  
+          alert("Password must be at least 6 characters long.");  
+          return false;  
+          }  
+        }  
+        </script>
+		<style type="text/css">
+		body {
+			overflow: hidden;
+			height: 100%; 
+			max-height: 100%; 
+			font-family:Sans-serif;
+			line-height: 1.5em;
+		}
+		
+		main {
+			position: fixed;
+			top: 60px; 
+			bottom: 50px; 
+			left: 25%; 
+			right: 25%;
+			overflow: auto; 
+			background: #fff;
+		}
+				
+		#header {
+			position: absolute;
+			width: 100%;
+			height: 60px; 
+			overflow: hidden; 
+			background: #BCCE98;
+		}
+
+		#footer {
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			width: 100%;
+			height: 50px; 
+			overflow: hidden; 
+			background: #BCCE98;
+		}
+				
+		#left {
+			position: absolute; 
+			top: 60px;
+			bottom: 50px; 
+			
+			width: 20%;
+			overflow: auto; 
+			background: #DAE9BC; 		
+		}
+
+		#right {
+			position: absolute; 
+			top: 60px;
+			bottom: 50px; 
+			right: 0; 
+			width: 20%;
+			overflow: auto; 
+			background: #F7FDEB; 		
+		}
+				
+		.innertube {
+			margin: 15px;
+		}
+		
+		p {
+			color: #555;
+		}
+
+		nav ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+		}
+		
+		nav ul a {
+			color: darkgreen;
+			text-decoration: none;
+		}
+				
+		* html body{
+			padding: 50px 200px 50px 200px;
+		}
+		* html main{ 
+			height: 100%; 
+			width: 100%; 
+		}
+
+	</style>	
+	</head>
+	
+	<body>		
+		<header id="header">
+			<div class="innertube">
+				<p style="font-size: 50px ;" align="center">Student LOGIN</p>
+			</div>
+		</header>
+				
+		<main>
+		<hr>
+		<div class="jumbotron">			 
+	<form action="/action_page.php" onsubmit="return validateform()">
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
+    </div>
+    <div class="form-group form-check">
+      <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" name="remember"> Remember me
+      </label>
+    </div>
+    <button type="submit" class="btn btn-primary" value="submit">Submit</button>
+  </form>
+						 
+						 
+						 
+			</div>
+		</main>
+
+		<nav id="left">
+			<div class="innertube">
+				<ul>
+					<hr><li><a href="Home2.html">Home</a></li><hr>
+					<li><a href="Student Login2.html">Student LOGIN</a></li><hr>
+					<li><a href="Admin login2.html">Admin login</a></li><hr>
+					<li><a href="Registration2.html">Registration</a></li><hr>
+					<li><a href="Test2.html">Test</a></li><hr>
+					<li><a href="Result2.html">Results</a></li><hr>
+				</ul>
+		</div>
+		</nav>	
+		<div id="right">
+			<div class="innertube">
+				<p>Advertisement</p>
+			</div>
+		</div>
+		
+		<footer id="footer">
+			<div class="innertube">
+				<p>visit us on </p>
+			</div>
+		</footer>	
+			
+	</body>
+</html>
