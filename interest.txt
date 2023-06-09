@@ -1,0 +1,128 @@
+select * from ramu_emp
+
+with dwas ( dept_nos, avgsal) as
+( select dept_no, round(avg(sal),2) from ramu_emp group by dept_no),
+tas(maxsal,minsal,tsal) as
+( select max(sal),min(sal),sum(sal) from ramu_emp)
+select dept_nos,avgsal,maxsal,minsal,tsal from dwas,tas
+
+select * from adi_tnx
+select * from adi_acc
+
+--GetBalOnDate--
+create or replace function GetBalOnDate(acc int,on_date date)
+returns numeric language plpgsql as
+$$
+declare
+cb numeric:= (select currentbal from adi_acc where accno=acc);
+ct record;
+cur_tnx cursor for select * from adi_tnx where tr_date between on_date and current_date and accno=acc;
+begin
+open cur_tnx;
+loop 
+fetch cur_tnx into ct;
+exit when not found;
+if(ct.tr_type='Credit') then
+raise notice 'Credit Tnx amt %',cb;
+cb:=cb-ct.tr_amount;
+elsif(ct.tr_type='Withdraw') then
+raise notice 'Withdraw Tnx amt %',cb;
+cb:=cb+ct.tr_amount;
+end if;
+raise notice ' on date cureent bal %',cb;
+end loop;
+return cb;
+end;
+$$;
+
+select GetBalOnDate(1001,'2002-04-28'::date)
+
+
+--GetMinBal_adi--
+create or replace function GetMinBal_adi(acc int,start_date date,end_date date)
+ returns numeric language plpgsql as 
+ $$
+ declare
+ cur_record record;
+ curr_cur cursor for select * from adi_tnx where tr_date between start_date and end_date and accno=acc;
+ ondatebal numeric := (select GetBalOnDate(acc,end_date));
+ min_bal numeric :=ondatebal;
+ begin 
+ open curr_cur;
+ loop 
+ fetch curr_cur into cur_record;
+ exit when not found;
+ if(cur_record.tr_type='Credit') then
+ ondatebal:=ondatebal-cur_record.tr_amount;
+ raise notice 'Credit  bal %',ondatebal;
+ elsif(cur_record.tr_type='Withdraw') then
+ ondatebal:=ondatebal+cur_record.tr_amount;
+  raise notice 'Withdraw  bal %',ondatebal;
+ end if;
+ if(min_bal>ondatebal) then
+ min_bal:=ondatebal;
+ raise notice 'Chnaged min bal %',min_bal;
+ end if;
+ end loop;
+ return min_bal;
+ end;
+ $$;
+
+select GetMinBal_adi(1001,'2002-04-10'::date,'2002-04-30'::date)
+
+--DepositInterestAdi--
+create or replace procedure DepositInterestAdi(acc int)
+language plpgsql as 
+$$
+declare
+amt numeric ;
+intr numeric:=0;
+start_date date;
+end_date date;
+begin
+for i in 1..NoOfMonths(acc)
+	loop
+    start_date := date_trunc('month',current_date)-i*interval '1 month' + interval '9 days';
+    end_date := date_trunc('month',current_date)-i* interval '1 Month'-interval '1 day';
+    amt=GetMinBal_adi(acc,start_date,end_date);
+    intr:= intr +(amt*0.083*4.2)/100;
+    end loop;
+insert into adi_tnx values(acc,current_date,'Credit',intr);
+update adi_acc set currentbal=currentbal+intr where accno=acc;
+end;
+$$;
+
+
+    
+--NoOfMonths--    
+create or replace function NoOfMOnths(acc int)
+returns int
+language plpgsql as
+$$
+declare
+mon int ;
+days int;
+begin
+mon := (select extract(year from age(op_date))*12+extract(month from age(op_date))+round(extract(day from age(op_date))/30)from adi_acc where accno=acc);
+days := ( select extract( day from op_date) from adi_acc where accno=acc);
+
+if(mon>6) then return 6;
+elsif(days>10) then return mon-1;
+else  return mon ;
+end if;
+end;
+$$;
+
+select NoOfMOnths(1001)
+
+
+do $$ declare i int;n date;
+begin
+for i in 1..5
+	loop
+   	n:= date_trunc('month',current_date)-i* interval '1 Month'-interval '1 day' ;
+ 	raise notice '%',n;
+    end loop;
+    end;
+    $$ ;
+    
