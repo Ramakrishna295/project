@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Table</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <style>
+    table, th, td {
+      border: 1px solid white;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 25px;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Loans</h1>
+
+  <table>
+    <tr>
+      <td><button onclick="showLoanTypeForm()">Add new Loan Type</button></td>
+    </tr>
+    <tr>
+      <td>
+        Select a Loan Type:
+        <select id="loan-type" onchange="showRow()">
+          <option value="">Select...</option>
+          <option value="1">Personal Loan</option>
+          <option value="2">Vehicle Loan</option>
+          <option value="3">Gold Loan</option>
+          <option value="4">Mortgage Loan</option>
+        </select>
+        <div id="information"></div>
+      </td>
+    </tr>
+  </table>
+  
+  
+  <br><br>
+ 
+  
+  
+  <table id="myTable" hidden>
+    <tr>
+      <th>id</th>
+      <th>type</th>
+      <th>desc</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Personal Loan</td>
+      <td>A personal loan is an amount of money you can borrow to use for a variety of purposes.</td>
+    </tr>
+    
+    <tr>
+      <td>2</td>
+      <td>Vehicle Loan</td>
+      <td>A Vehicle Loan is a loan that allows you to purchase two and four wheelers for personal use.</td>
+    </tr>
+    
+    <tr>
+      <td>3</td>
+      <td>Gold Loan</td>
+      <td>The gold loan, also referred as a loan against gold, is a secured loan that a borrower takes from a lender in lieu of gold ornaments such as gold jewelry.</td>
+    </tr>
+    
+    <tr>
+      <td>4</td>
+      <td>Mortgage Loan</td>
+      <td>A mortgage is a type of loan used to purchase or maintain a home, land, or other types of real estate.</td>
+    </tr>
+  </table>
+  
+  <br><br>
+  
+  <table id="resultTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Loan Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody id="resultTableBody">
+    </tbody>
+  </table>
+  
+  
+  <script>
+    function showRow() {
+    	var searchValue = document.getElementById("loan-type").value;
+        
+        var sourceTable = document.getElementById("myTable");
+        
+        var rowCount = sourceTable.rows.length;
+        
+        var resultTableBody = document.getElementById("resultTableBody");
+        resultTableBody.innerHTML = "";
+        
+        for (var i = 0; i < rowCount; i++) {
+        	var cellValue = sourceTable.rows[i].cells[0].innerHTML;
+            if (cellValue === searchValue) {
+            	var clonedRow = sourceTable.rows[i].cloneNode(true);
+                resultTableBody.appendChild(clonedRow);
+                break; 
+            }
+        }
+    }
+  </script>
+  
+  
+  <!-- Loan Type Modal -->
+  <div id="loanTypeModal" class="modal">
+    <div class="modal-content">
+      <h2>New Loan Type</h2>
+      <form>
+      <table>
+      	<tr>
+        <td>Loan Type ID:</td>
+        <td><input type="text" id="loan_id" name="loan_id" required></td>
+        <tr>
+
+        <tr>
+        <td>Loan Type Title:</td>
+        <td><input type="text" id="loan_title" name="loan_title" required></td>
+        <tr>
+
+      </table>
+
+        <button type="button" onclick="adddescription()">Add Description</button>
+        <button type="button" onclick="closeModal()">Cancel</button>
+      </form>
+    </div>
+  </div>
+  
+  
+  <div id="descriptionForm" class="modal">
+    <div class="modal-content">
+      <h2>Description</h2>
+      <form>
+      <table>
+        <tr>
+        <td>Loan Type Description:</td>
+        <td><textarea id="loan_desc" name="loan_desc" rows="4" cols="40"></textarea></td>
+        <tr>
+      </table>
+
+        <button type="button" onclick="saveLoanType()">Save</button>
+        <button type="button" onclick="closeModal()">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+
+
+     function adddescription() {
+      var modal = document.getElementById("descriptionForm");
+      modal.style.display = "block";
+    }
+    
+    function showLoanTypeForm() {
+      var modal = document.getElementById("loanTypeModal");
+      modal.style.display = "block";
+    }
+
+    function closeModal() {
+      var modals = document.getElementsByClassName("modal");
+      for (var i = 0; i < modals.length; i++) {
+        modals[i].style.display = "none";
+      }
+    }
+
+
+
+    
+    function saveLoanType() {
+      var loanId = document.getElementById("loan_id").value;
+      var loanTitle = document.getElementById("loan_title").value;
+      var loanDesc = document.getElementById("loan_desc").value;
+
+
+      console.log('Loan Type ID:', loanId);
+      console.log('Loan Type Title:', loanTitle);
+      console.log('Loan Type Description:', loanDesc);
+      
+      var table = document.getElementById("myTable");
+      var newRow = table.insertRow();
+
+      var cell1 = newRow.insertCell();
+      var cell2 = newRow.insertCell();
+      var cell3 = newRow.insertCell();
+
+      cell1.innerHTML = loanId;
+      cell2.innerHTML = loanTitle;
+      cell3.innerHTML = loanDesc;
+
+      addLoanTypeOption(loanTitle); // Add the new option
+
+      closeModal();
+    }
+
+    function addLoanTypeOption(title) {
+    
+      var loanTypeSelect = document.getElementById("loan-type");
+      var option = document.createElement("option");
+      option.value = title.toLowerCase().replace(/\s+/g, "-");
+      option.text = title;
+      loanTypeSelect.add(option);
+
+    }
+  </script>
+</body>
+</html>
