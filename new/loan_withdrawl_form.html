@@ -3,6 +3,18 @@
 <head>
 <meta charset="ISO-8859-1">
     <title>Loan Withdrawal</title>
+
+<script>
+function validateForm() {
+  let x = document.myForm.loanid.value;
+  if (x.length!=11) {
+    alert("Loan ID must be 11 digits");
+    return false;
+  }
+}
+</script>
+
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -66,36 +78,62 @@
     <div id="loan-withdrawal-form" class="form-container">
         <main>
             <div class="jumbotron">
-                <form method="post">
+                <form name="myForm" onsubmit="return validateForm()">
                     <h1>Loan Withdrawal</h1>
                     <div class="form-group">
                         <label for="loanid">Loan ID:</label>
-                        <input type="number" class="form-control" id="loanid" placeholder="Enter loan ID" name="loanid" required>
+                        <input type="number" class="form-control" maxlength="11" id="loanid" placeholder="Enter loan ID" name="loanid" onkeyup="myFunction()" required>
                     </div>
                     <div class="form-group">
                         <label for="accountNumber">Account Number:</label>
-                        <input type="number" class="form-control" id="accountNumber" name="accountNumber">
+                        <input type="number" class="form-control" id="accountNumber" name="accountNumber" readonly>
                     </div>
                     <div class="form-group">
                         <label for="accountHolder">Account Holder:</label>
-                        <input type="text" class="form-control" id="accountHolder" name="accountHolder">
+                        <input type="text" class="form-control" id="accountHolder" name="accountHolder" readonly>
                     </div>
                     <div class="form-group">
                         <label for="loanType">Loan Type:</label>
-                        <input type="text" class="form-control" id="loanType" name="loanType">
+                        <input type="text" class="form-control" id="loanType" name="loanType" readonly>
                     </div>
                     <div class="form-group">
                         <label for="date">Date:</label>
-                        <input type="date" class="form-control" id="date" name="date">
+                        <input type="text" class="form-control" id="date" name="date" readonly>
                     </div>
                     <div class="form-group">
-                        <label for="loanamount">Loan Amount:</label>
-                        <input type="number" class="form-control" id="loanamount" name="loanamount">
+                        <label for="loanamount">Loan amount:</label>
+                        <input type="number" class="form-control" id="loanamount" name="loanamount" readonly>
                     </div>
                     <button type="submit" class="btn btn-primary" value="Withdraw">Withdraw</button>
                 </form>
             </div>
         </main>
     </div>
+
+<script>
+
+  let date = document.getElementById("date");
+  var currentDate = new Date();
+  var options = { year: 'numeric', month: 'long', day: 'numeric' };
+  var formattedDate = currentDate.toLocaleDateString(undefined, options);
+  date.value = formattedDate;
+
+
+  function myFunction() {
+	let lid = document.getElementById("loanid");
+    let acn = document.getElementById("accountNumber");
+    let ach = document.getElementById("accountHolder");
+    let lty = document.getElementById("loanType");
+    let lam = document.getElementById("loanamount");
+
+    acn.value = lid.value;
+    ach.value = lid.value;
+    lty.value = lid.value;
+    lam.value = lid.value;
+    
+  }
+
+</script>
+
 </body>
 </html>
