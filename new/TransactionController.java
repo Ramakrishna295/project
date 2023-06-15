@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestMethod;;
 @Controller
 public class TransactionController {
 
-	// ================================================================================================================================
-
 	@RequestMapping(value = "/moneydeposit", method = RequestMethod.GET)
 	public String money(Model model) {
 		return "Money_Deposit";
@@ -34,8 +32,5 @@ public class TransactionController {
 	public String lowid(Model model) {
 		return "loan_withdrawl_form";
 	}
-	// =============================================================================
-
-	// ===========================================================================
 
 }
