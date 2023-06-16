@@ -1,0 +1,56 @@
+package com.nkxgen.spring.jdbc.model;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Repository;
+
+@Repository
+@Transactional
+public class TransactionsDAO implements TransactionsInterface {
+
+	@PersistenceContext
+	private EntityManager em;
+
+	@Override
+	public void moneyDeposit() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void loanRepayment() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void interestDeposit() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void moneyWithdrawl() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void loanWithdrawl() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public TempAccounts getAccountById(Long id) {
+		// TODO Auto-generated method stub
+		TypedQuery<TempAccounts> query = em.createQuery("SELECT ta FROM TempAccounts ta WHERE ta.acnt_id = :id",
+				TempAccounts.class);
+		query.setParameter("id", id);
+		return query.getSingleResult();
+	}
+
+}
