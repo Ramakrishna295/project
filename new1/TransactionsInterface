@@ -1,0 +1,19 @@
+package com.nkxgen.spring.jdbc.model;
+
+public interface TransactionsInterface {
+
+	public TempAccounts getAccountById(int id);
+
+	public void moneyDeposit(TempAccounts tempacc);
+
+	public void loanRepayment();
+
+	public void interestDeposit();
+
+	public void moneyWithdrawl();
+
+	public void loanWithdrawl();
+
+	void moneyDeposit(int Acnt_id);
+
+}
